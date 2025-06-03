@@ -3,148 +3,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Calculator</title>
+    <title>Crypto Currency Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #000000;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             padding: 20px;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
-            width: 100%;
-            height: 100%;
-        }
-         select {
-            width: 100%;
-            padding: 10px;
-            margin: 12px 0;
-            border: 2px solid #000000;
-            border-radius: 8px;
-        }
-        input{
-            width: 92%;
-            padding: 10px;
-            margin: 12px 0;
-            border: 2px solid #000000;
-            border-radius: 8px;
-        }
-        button{
-            width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  margin-top: 20px;
-  background: #505050;
-  border: 1px solid #9f9f9f;
-
-        }
-        .text1{
-            text-align: center;
-            
-        }
-        .sp-btn{
-            width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  margin-top: 20px;
-  background: #00bbff;
-  border: 1px solid #000000;
-
-
-
-        }
-        .spsol-btn{
-            width: 100%;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
-  margin-top: 20px;
-  background: #cd14de;
-  border: 1px solid #000000;
-
         }
         
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(19, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .header h1 {
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header p {
+            color: #8c92ac;
+            font-size: 1rem;
+        }
+        
+        .card {
+            background: rgba(30, 35, 60, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        .input-group label {
+            display: block;
+            color: #a0a7d0;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c72a0;
+            font-size: 1.2rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border-radius: 12px;
+            border: 1px solid rgba(108, 114, 160, 0.3);
+            background: rgba(15, 18, 35, 0.7);
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+        
+        input::placeholder {
+            color: #5d6180;
+        }
+        
+        .swap-btn {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+        
+        .swap-btn button {
+            background: transparent;
+            border: 1px solid rgba(108, 114, 160, 0.3);
+            color: #8c92ac;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .swap-btn button:hover {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            border-color: #6366f1;
+            transform: rotate(180deg);
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .convert-btn {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+        
+        .convert-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .ton-btn {
+            background: linear-gradient(90deg, #0088cc, #00aaff);
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.3);
+        }
+        
+        .ton-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.4);
+        }
+        
+        .sol-btn {
+            background: linear-gradient(90deg, #9945ff, #14f195);
+            box-shadow: 0 4px 15px rgba(153, 69, 255, 0.3);
+        }
+        
+        .sol-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(153, 69, 255, 0.4);
+        }
+        
+        .result-container {
+            background: rgba(30, 35, 60, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        #result {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 10px 0;
+            background: linear-gradient(90deg, #00dbde, #fc00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        #rateInfo {
+            color: #8c92ac;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+        
+        .loader {
+            display: none;
+            width: 50px;
+            height: 50px;
+            margin: 20px auto;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            border-top: 5px solid #6366f1;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .crypto-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .crypto-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(30, 35, 60, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #8c92ac;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .crypto-icon:hover {
+            transform: translateY(-3px);
+            color: #6366f1;
+            border-color: #6366f1;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #5d6180;
+            font-size: 0.85rem;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            #result {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h2 class = text1 ></h2>
-    <label for="cryptoAmount">Amount:</label>
-    <input type="number" id="cryptoAmount" placeholder="Enter amount" />
-
-    <label for="cryptoSelect">Choose cryptocurrency:</label>
-    <select id="cryptoSelect">
-        <option value="bitcoin">Bitcoin (BTC)</option>
-        <option value="ethereum">Ethereum (ETH)</option>
-        <option value="litecoin">Litecoin (LTC)</option>
-        <option value="fasttoken">Fasttoken (FTN)</option>
-        <option value="toncoin">Toncoin (TON)</option> 
-        <option value="solana">Solana (SOL)</option>
-        <option value="pi-network">Pi Network (PI)</option>
-        <option value="notecoin">Notcoin (NOT)</option>
-        <option value="px-token">PX Token (PX)</option>
-    </select>
-
-    <label for="fiatSelect">Convert to:</label>
-    <select id="fiatSelect">
-        <option value="usd">USD</option>
-        <option value="eur">EUR</option>
-        <option value="amd">AMD (Armenian Dram)</option> <!-- Added AMD (Armenian Dram) -->
-    </select>
-
-    <button onclick="convertCrypto()">Convert</button>
-    <button class="sp-btn" onclick="window.open('ton://transfer/UQBfrU75WGhBLnRpBs1ImWE5sPdxKsFMBgogpD578JxXyDbK?amount=10000000&text=Support%20the%20project!')">
-        Support with TON
-    </button>
-    <button class="spsol-btn" onclick="window.open('solana:8LcYdXwRFU6uHTL2Ns2XRnNyY7ZB7YWhEGuuN5Hxokaf?amount=0.1&memo=Support%20the%20project!')">
-        Support with SOL
-    </button>
-    
-    
-    <h3 id="result"></h3>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-    async function convertCrypto() {
-        const amount = document.getElementById('cryptoAmount').value;
-        const crypto = document.getElementById('cryptoSelect').value;
-        const fiat = document.getElementById('fiatSelect').value;
+    <div class="container">
+        <div class="header">
+            <h1>Crypto Currency Calculator</h1>
+            <p>Real-time cryptocurrency conversions</p>
+        </div>
         
-        if (!amount) {
-            alert("Please enter an amount.");
-            return;
+        <div class="card">
+            <div class="input-group">
+                <label for="cryptoAmount"><i class="fas fa-coins"></i> Amount</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-hashtag"></i>
+                    <input type="number" id="cryptoAmount" placeholder="Enter amount" value="1">
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="cryptoSelect"><i class="fas fa-bitcoin"></i> From</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-coins"></i>
+                    <select id="cryptoSelect">
+    <option value="bitcoin">Bitcoin (BTC)</option>
+    <option value="ethereum">Ethereum (ETH)</option>
+    <option value="litecoin">Litecoin (LTC)</option>
+    <option value="fasttoken">Fasttoken (FTN)</option>
+    <option value="the-open-network">Toncoin (TON)</option> <!-- Corrected ID -->
+    <option value="solana">Solana (SOL)</option>
+    <option value="pi-network-token">Pi Network (PI)</option> <!-- Corrected -->
+    <option value="notcoin">Notcoin (NOT)</option>
+    <!-- Removed px-token since it's not available -->
+</select>
+
+                </div>
+            </div>
+            
+            <div class="swap-btn">
+                <button id="swapBtn" title="Swap currencies">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+            </div>
+            
+            <div class="input-group">
+                <label for="fiatSelect"><i class="fas fa-money-bill-wave"></i> To</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-dollar-sign"></i>
+                    <select id="fiatSelect">
+                        <option value="usd">USD (US Dollar)</option>
+                        <option value="eur">EUR (Euro)</option>
+                        <option value="amd">AMD (Armenian Dram)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="convert-btn" onclick="convertCrypto()">
+                    <i class="fas fa-exchange-alt"></i> Convert Now
+                </button>
+                <button class="ton-btn" onclick="window.open('ton://transfer/UQBfrU75WGhBLnRpBs1ImWE5sPdxKsFMBgogpD578JxXyDbK?amount=10000000&text=Support%20the%20project!')">
+                    <i class="fas fa-donate"></i> Support with TON
+                </button>
+                <button class="sol-btn" onclick="window.open('solana:8LcYdXwRFU6uHTL2Ns2XRnNyY7ZB7YWhEGuuN5Hxokaf?amount=0.1&memo=Support%20the%20project!')">
+                    <i class="fas fa-hand-holding-usd"></i> Support with SOL
+                </button>
+            </div>
+        </div>
+        
+        <div class="result-container">
+            <div class="loader" id="loader"></div>
+            <div id="result">1 Bitcoin = 61,243.50 USD</div>
+            <div id="rateInfo">Exchange rate updated: Just now</div>
+        </div>
+        
+        <div class="crypto-icons">
+            <div class="crypto-icon"><i class="fab fa-bitcoin"></i></div>
+            <div class="crypto-icon"><i class="fab fa-ethereum"></i></div>
+            <div class="crypto-icon"><i class="fas fa-coins"></i></div>
+            <div class="crypto-icon"><i class="fas fa-bolt"></i></div>
+            <div class="crypto-icon"><i class="fas fa-fire"></i></div>
+        </div>
+        
+        <div class="footer">
+            <p>Real-time data provided by CoinGecko API</p>
+            <p>&copy; 2023 Crypto Calculator | All rates are estimates</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Initialize with current date
+        const now = new Date();
+        document.getElementById('rateInfo').textContent = `Exchange rate updated: ${formatDate(now)}`;
+        
+        // Format date for display
+        function formatDate(date) {
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + 
+                   ' on ' + date.toLocaleDateString();
         }
-
-        try {
-            // Fetching the conversion rates using CoinGecko API
-            const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=${fiat}`);
-            const rate = response.data[crypto][fiat];
-            const result = (rate * amount).toFixed(2);
-
-            document.getElementById('result').innerText = `${amount} ${crypto.toUpperCase()} = ${result} ${fiat.toUpperCase()}`;
-        } catch (error) {
-            console.error("Error fetching data", error);
-            alert("Something went wrong. Please try again later.");
+        
+        // Swap currencies function
+        document.getElementById('swapBtn').addEventListener('click', function() {
+            const cryptoSelect = document.getElementById('cryptoSelect');
+            const fiatSelect = document.getElementById('fiatSelect');
+            
+            // Store current values
+            const tempCrypto = cryptoSelect.value;
+            const tempFiat = fiatSelect.value;
+            
+            // Swap values
+            cryptoSelect.value = tempFiat;
+            fiatSelect.value = tempCrypto;
+            
+            // Convert immediately after swap
+            convertCrypto();
+        });
+        
+        // Convert crypto function
+        async function convertCrypto() {
+            const amount = document.getElementById('cryptoAmount').value;
+            const crypto = document.getElementById('cryptoSelect').value;
+            const fiat = document.getElementById('fiatSelect').value;
+            
+            if (!amount) {
+                alert("Please enter an amount.");
+                return;
+            }
+            
+            // Show loader
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result').textContent = '';
+            document.getElementById('rateInfo').textContent = 'Fetching latest rates...';
+            
+            try {
+                // Fetching the conversion rates using CoinGecko API
+                const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${crypto}&vs_currencies=${fiat}`);
+                
+                if (!response.data[crypto] || !response.data[crypto][fiat]) {
+                    throw new Error('Currency data not available');
+                }
+                
+                const rate = response.data[crypto][fiat];
+                const result = (rate * amount).toFixed(2);
+                
+                // Format number with commas
+                const formattedResult = new Intl.NumberFormat('en-US', {
+                    maximumFractionDigits: 2
+                }).format(result);
+                
+                // Get crypto and fiat names for display
+                const cryptoName = document.getElementById('cryptoSelect').options[document.getElementById('cryptoSelect').selectedIndex].text;
+                const fiatName = document.getElementById('fiatSelect').options[document.getElementById('fiatSelect').selectedIndex].text;
+                
+                // Update result
+                document.getElementById('result').innerText = `${amount} ${cryptoName.split(' ')[0]} = ${formattedResult} ${fiatName.split(' ')[0]}`;
+                
+                // Update timestamp
+                const now = new Date();
+                document.getElementById('rateInfo').textContent = `Exchange rate updated: ${formatDate(now)}`;
+            } catch (error) {
+                console.error("Error fetching data", error);
+                document.getElementById('result').innerText = 'Error fetching rates';
+                document.getElementById('rateInfo').textContent = 'Please try again later';
+            } finally {
+                // Hide loader
+                document.getElementById('loader').style.display = 'none';
+            }
         }
-    }
-</script>
-
+        
+        // Initialize with a conversion
+        window.onload = convertCrypto;
+        
+        // Auto-convert when amount changes
+        document.getElementById('cryptoAmount').addEventListener('input', convertCrypto);
+        
+        // Auto-convert when currency selection changes
+        document.getElementById('cryptoSelect').addEventListener('change', convertCrypto);
+        document.getElementById('fiatSelect').addEventListener('change', convertCrypto);
+    </script>
 </body>
 </html>
+
